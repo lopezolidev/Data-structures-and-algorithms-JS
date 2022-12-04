@@ -126,12 +126,20 @@ class MyArray2 {
     }
     
     unshift(item){
-            for (let i = 0; i < this.length; i++) {
-                this.data[this.length - i] = this.data[this.length - i - 1];
-            }
-            this.length++; 
-            this.data[0] = item;
-            return this
+      if(!item){
+                return this.length;
+              }
+      if(this.length === 0){
+                this.data[0] = item;
+                this.length++;
+                return this.length;
+              }        
+      for (let i = 0; i < this.length; i++) {
+          this.data[this.length - i] = this.data[this.length - i - 1];
+      }
+      this.length++; 
+      this.data[0] = item;
+      return this
     }
   }
 
@@ -155,33 +163,33 @@ console.log(myarray2.unshift("lo"))
 //   }
 
 //teacher's solution:
-// export class MyArray {
-//     constructor() {
-//       this.length = 0;
-//       this.data = {};
-//     }
+class MyArray3 {
+    constructor() {
+      this.length = 0;
+      this.data = {};
+    }
     
-//     unshift(item){
-//       if(!item){
-//         return this.length;
-//       }
+    unshift(item){
+      if(!item){
+        return this.length;
+      }
   
-//       if(this.length === 0){
-//         this.data[0] = item;
-//         this.length++;
-//         return this.length;
-//       }
+      if(this.length === 0){
+        this.data[0] = item;
+        this.length++;
+        return this.length;
+      }
       
-//       for(let i = this.length; i > 0; i--){
-//         this.data[i] = this.data[i - 1];
-//       }
+      for(let i = this.length; i > 0; i--){
+        this.data[i] = this.data[i - 1];
+      }
       
-//       this.data[0] = item;
+      this.data[0] = item;
   
-//       this.length++;
-//       return this.length;
-//     }
-//   }
+      this.length++;
+      return this.length;
+    }
+  }
   
 
 //Crea tu propia implementación de shift
@@ -209,7 +217,7 @@ console.log(myarray2.unshift("lo"))
 
 // "Un 🐱 random en el desafío"
 
-export class BetterArray extends MyArray2 {
+class BetterArray extends MyArray3 {
   constructor(){
     super()
     this.length = 0
@@ -217,7 +225,36 @@ export class BetterArray extends MyArray2 {
   }
 
   shift(){
-    // Tu código aquí 👈
-    
+    if(this.length == 0){
+      return undefined
+    }
+    const item = this.data[0];
+    for (let i = 0; i < this.length - 1; i++) {
+      this.data[i] = this.data[i + 1];
+    }
+    this.length--;
+    delete this.data[this.length]
+    //important note: we must delete the last item to not repeat it at the end
+    return item;
   }
 }
+
+const better = new BetterArray();
+//instancing the array
+
+console.log(better.unshift("Suerte"))
+console.log(better.unshift("Con el"))
+console.log(better.unshift("desafio"))
+console.log(better.unshift("platzinauta"))
+console.log(better.unshift("Un 🐱 random en el desafío"))
+//adding elements at the beginning of the array
+
+console.log(better.shift());
+
+console.log(better.shift());
+console.log(better.shift());
+console.log(better.shift());
+console.log(better.shift());
+
+console.log(better.shift());
+//confirming return of undefined
