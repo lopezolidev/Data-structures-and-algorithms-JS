@@ -35,9 +35,28 @@ class Stack {
 
         return this;
     }
-
-    //===TODO: pop()
+    pop(){
+        if(this.length === 0){ //validating cases where the stack has no nodes, at least one node and more than one nodes
+            return undefined;
+        } else if(this.length === 1){
+            this.top = null;
+            this.bottom = null;
+            //straight up "reseting" the stack
+        } else {
+            const newTop = this.top.next;
+            this.top = newTop;
+            //leaving the first top with no memory linking
+        }
+        this.length--; //decreasing length value
+        return this;
+    }
 }
 
 const myStack = new Stack();
 console.log(myStack)
+
+console.log(myStack.push(3))
+console.log(myStack.push(4))
+console.log(myStack.push(5))
+
+console.log(myStack.pop())
