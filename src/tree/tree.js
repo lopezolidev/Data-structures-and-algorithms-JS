@@ -44,7 +44,35 @@ class BinarySearchTree {
             }
         }
     }
-    //TODO: Search(value){...}
+    search(value, currentNode = this.root){
+        //default parameter of currentNode is root node of the tree, even though it can be any other value found in the tree
+
+        if(currentNode.value === null){
+            //just to make sure the tree is not empty
+            return undefined;
+        } else if(value == currentNode.value){
+            //fulfilling case when the the searched value is equal to the current node value
+        
+            return currentNode;
+            //returning the found node
+        } 
+            else if (value < currentNode.value){
+            //when the value provided is inferior to the current node's value
+            
+            currentNode = currentNode.left;
+            //assigning current node the node on it's left (asuming we're working on a balanced tree)
+            
+            return this.search(value, currentNode);
+            //now as the current node is the value on the left we'll return the same method but now with the updated node
+        } 
+            else if (value > currentNode.value){
+            //same logic as described above but for a case when the value is superior to the current node's value
+            
+            currentNode = currentNode.right
+            return this.search(value, currentNode);
+        }
+    }
+    
 }
 
 const myTree = new BinarySearchTree();
@@ -58,3 +86,5 @@ console.log(myTree.insert(11));
 console.log(myTree.insert(31));
 console.log(myTree.insert(26));
 console.log(myTree)
+
+console.log(myTree.search(24))
