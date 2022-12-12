@@ -212,24 +212,83 @@ class Graph_AdjacentMatrix {
             //returning graph with ordered nodes
         }
     }
+    buildMatrix(node){
+        //this method allows to create a matrix of 0's in the desired nodes's connection array
+
+        let orderedNodes = Object.keys(this.adjacentMat).sort((a,b) => a - b);
+        //creating second matrix → reference matrix to allocate 1's or 0's
+
+        orderedNodes.map(i => {
+            //iterating through each item in the array or ordered nodes
+            let indexOfElement = orderedNodes.indexOf(i);
+            //selecting the index of each element in the array
+
+             if(this.adjacentMat[node][indexOfElement] != 1){
+                //only replacing the specific index in the node's connections when the value in such index is different than 1, therefore inserting 0 in that space
+                this.adjacentMat[node].splice(indexOfElement, 1, 0);
+             }
+        })
+        return this;
+    }
     addEdge(node1, node2){
         let orderedNodes = Object.keys(this.adjacentMat).sort((a,b) => a - b);
-        let maxNumber = orderedNodes.pop();
-        //TODO ADD EDGES
-        return this;
+        //second matrix for reference
+
+        let indexNode1 = orderedNodes.indexOf(node1.toString());
+        let indexNode2 = orderedNodes.indexOf(node2.toString());
+        //index of the to-be-connected nodes, one for the first node, another for the second node
+
+        this.buildMatrix(node1);
+        this.buildMatrix(node2);
+        //creating the matrix for base node and connection node
+
+        orderedNodes.forEach(i => {
+            //iterating through orderedNodes array to allocate 1's where there's connection
+            if(i == node1){
+                //to make connection in matrix of node2 
+                
+                this.adjacentMat[node2].splice(indexNode1, 1, 1);
+                //replacing the index in node2 connections with a "1"
+            }
+            //same logic applies to node1
+            if(i == node2){
+                this.adjacentMat[node1].splice(indexNode2, 1, 1);
+            }
+        })
+        return this
     }
 }
 
 const myGraphMat = new Graph_AdjacentMatrix();
 
 console.log(myGraphMat)
-console.log(myGraphMat.addVertex(3))
-console.log(myGraphMat.addVertex(2))
-console.log(myGraphMat.addVertex(0))
-console.log(myGraphMat.addVertex(1))
+myGraphMat.addVertex(3)
+myGraphMat.addVertex(2)
+myGraphMat.addVertex(0)
+myGraphMat.addVertex(1)
 
+// console.log(myGraphMat.buildMatrix(0))
 console.log(myGraphMat.addEdge(0, 1))
 console.log(myGraphMat.addEdge(0, 2))
+
+console.log(myGraphMat.addEdge(1, 0))
 console.log(myGraphMat.addEdge(1, 3))
+console.log(myGraphMat.addEdge(1, 2))
+
+console.log(myGraphMat.addEdge(2, 0))
 console.log(myGraphMat.addEdge(2, 3))
+
+// console.log(myGraphMat.addEdge(3, 1))
+// console.log(myGraphMat.buildMatrix(1));
+// console.log(myGraphMat.addEdge(1, 0))
+// console.log(myGraphMat.addEdge(1, 3))
+
+// console.log(myGraphMat.buildMatrix(2));
+// console.log(myGraphMat.addEdge(2, 0))
+// console.log(myGraphMat.addEdge(2, 3))
+
+
+// console.log(myGraphMat.buildMatrix(3));
+// console.log(myGraphMat.addEdge(3, 2))
+// console.log(myGraphMat.addEdge(3, 1))
 // console.log(myGraphMat.addEdge(0, 2))
