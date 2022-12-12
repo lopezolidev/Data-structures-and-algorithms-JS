@@ -186,3 +186,50 @@ console.log(myGraph2.addEdge(4, 8))
 //   }
 
 console.log(myGraph2.removeVertex(1))
+
+
+//============== Graph by Adjacent Matrix ↓↓↓
+
+class Graph_AdjacentMatrix {
+    constructor(){
+        this.nodes = 0;
+        this.adjacentMat = {}
+    }
+    addVertex(value){
+        if(!this.adjacentMat[value]){
+            this.adjacentMat[value] = [];
+            //nodes connections with other nodes
+            let orderedNodes = Object.keys(this.adjacentMat).sort((a,b) => a - b)
+            //ordering nodes keys 
+            for (let index = 0; index < orderedNodes.length; index++) {
+                this.adjacentMat[orderedNodes[index]]
+                //stablishing ordered nodes's keys
+            }
+            this.nodes++;
+            //increasing number of nodes
+
+            return this;
+            //returning graph with ordered nodes
+        }
+    }
+    addEdge(node1, node2){
+        let orderedNodes = Object.keys(this.adjacentMat).sort((a,b) => a - b);
+        let maxNumber = orderedNodes.pop();
+        //TODO ADD EDGES
+        return this;
+    }
+}
+
+const myGraphMat = new Graph_AdjacentMatrix();
+
+console.log(myGraphMat)
+console.log(myGraphMat.addVertex(3))
+console.log(myGraphMat.addVertex(2))
+console.log(myGraphMat.addVertex(0))
+console.log(myGraphMat.addVertex(1))
+
+console.log(myGraphMat.addEdge(0, 1))
+console.log(myGraphMat.addEdge(0, 2))
+console.log(myGraphMat.addEdge(1, 3))
+console.log(myGraphMat.addEdge(2, 3))
+// console.log(myGraphMat.addEdge(0, 2))
